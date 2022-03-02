@@ -13,5 +13,6 @@ namespace PearlNecklace_Kata
         void Sort();
         (int freshCount, int saltCount) NrOfEachType();
         public int IndexOf(IPearl pearl);
+        public decimal TotalPrice();
     }
 }

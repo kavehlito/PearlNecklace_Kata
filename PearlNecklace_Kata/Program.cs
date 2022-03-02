@@ -18,5 +18,13 @@ Console.WriteLine();
 Console.WriteLine("Sorted List");
 necklaceList.Sort();
 Console.WriteLine(necklaceList);
+Console.WriteLine($"Total Price = {necklaceList.TotalPrice():C2}");
 
-Console.WriteLine(necklaceList.IndexOf(testNecklace1));
+if (necklaceList.IndexOf(testNecklace1) == -1)
+{
+    Console.WriteLine("This necklace does NOT exist");
+}
+else
+{
+    Console.WriteLine(necklaceList.IndexOf(testNecklace1));
+}

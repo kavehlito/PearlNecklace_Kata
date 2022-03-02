@@ -47,6 +47,16 @@ namespace PearlNecklace_Kata
 
         public int IndexOf(IPearl pearl) => _necklaceList.IndexOf(pearl);
 
+        public decimal TotalPrice()
+        {
+            decimal totalPrice = 0;
+            foreach (var item in _necklaceList)
+            {
+                totalPrice += item.Price; 
+            }
+            return totalPrice;
+        }
+
         internal static class Factory
         {
             internal static IPearlList CreateNecklaceList(int NrOfNecklaces)
