@@ -28,3 +28,28 @@ else
 {
     Console.WriteLine(necklaceList.IndexOf(testNecklace1));
 }
+
+string filename = fname("PearlNecklace.txt");
+
+using (FileStream fs = File.Create(filename))
+using (TextWriter writer = new StreamWriter(fs))
+{
+	writer.WriteLine(necklaceList);
+    Console.WriteLine();
+    Console.WriteLine(filename);
+}
+
+
+using (FileStream fs = File.OpenRead(fname("PearlNecklace.txt")))
+using (TextReader reader = new StreamReader(fs))
+{
+	Console.WriteLine(reader.ReadLine());
+}
+
+static string fname(string name)
+{
+	var documentPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+	documentPath = Path.Combine(documentPath, "MyProjects", "Exercises");
+	if (!Directory.Exists(documentPath)) Directory.CreateDirectory(documentPath);
+	return Path.Combine(documentPath, name);
+}
