@@ -1,4 +1,5 @@
 ﻿using PearlNecklace_Kata;
+using System.IO.Compression;
 
 var necklace1 = Pearl.Factory.CreateRandomNecklace();
 Console.WriteLine(necklace1);
@@ -29,11 +30,13 @@ else
     Console.WriteLine(pearlList.IndexOf(testNecklace1)+1);
 }
 
-var listOfNecklaces = NecklaceList.Factory.CreateNecklanceList(10);
+var listOfNecklaces = NecklaceList.Factory.CreateNecklanceList(1000);
 Console.WriteLine();
 Console.WriteLine("----------------------------------------");
-Console.WriteLine(listOfNecklaces);
+//Console.WriteLine(listOfNecklaces);
 Console.WriteLine("----------------------------------------");
+Console.WriteLine($"Total price Box of necklaces: {listOfNecklaces.TotalNecklaceBoxPrice():C2}");
+Console.WriteLine($"Total amount of black pearls: {listOfNecklaces.TotalNumberOfBlackPearls()}");
 
 /*
 string filename = fname("PearlNecklace.txt");
@@ -66,7 +69,8 @@ string boxOfNecklaces = bname("BoxOfNecklaces.txt");
 using (FileStream fs = File.Create(boxOfNecklaces))
 using (TextWriter writer = new StreamWriter(fs))
 {
-	writer.WriteLine(listOfNecklaces);
+	writer.WriteLine($"{listOfNecklaces}\nTotal price Box of necklaces: {listOfNecklaces.TotalNecklaceBoxPrice():C2}" +
+        $"\nTotal amount of black pearls: {listOfNecklaces.TotalNumberOfBlackPearls()}");
     Console.WriteLine();
     Console.WriteLine(boxOfNecklaces);
 }
@@ -78,6 +82,27 @@ using (TextReader reader = new StreamReader(fs))
 	Console.WriteLine(reader.ReadLine());
 }
 
+
+using (Stream s = File.Create(bname("BoxOfNecklaces_uncompressed.text")))
+using (TextWriter w = new StreamWriter(s))
+    w.Write($"{listOfNecklaces}\nTotal price Box of necklaces: {listOfNecklaces.TotalNecklaceBoxPrice():C2}" +
+        $"\nTotal amount of black pearls: {listOfNecklaces.TotalNumberOfBlackPearls()}");
+
+Console.WriteLine(new FileInfo(bname("BoxOfNecklaces_uncompressed.text")).Length);
+
+using (Stream s = File.Create(bname("BoxOfNecklaces_compressed.zip")))
+using (Stream ds = new GZipStream(s, CompressionMode.Compress))
+using (TextWriter w = new StreamWriter(ds))
+    w.Write($"{listOfNecklaces}\nTotal price Box of necklaces: {listOfNecklaces.TotalNecklaceBoxPrice():C2}" +
+        $"\nTotal amount of black pearls: {listOfNecklaces.TotalNumberOfBlackPearls()}");
+
+Console.WriteLine(new FileInfo(bname("BoxOfNecklaces_compressed.zip")).Length);
+
+using (Stream s = File.OpenRead(bname("BoxOfNecklaces_compressed.zip")))
+using (Stream ds = new GZipStream(s, CompressionMode.Decompress))
+using (TextReader r = new StreamReader(ds))
+    Console.Write(r.ReadToEnd());
+
 static string bname(string name)
 {
 	var documentPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
@@ -85,3 +110,20 @@ static string bname(string name)
 	if (!Directory.Exists(documentPath)) Directory.CreateDirectory(documentPath);
 	return Path.Combine(documentPath, name);
 }
+var documentPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+
+string startPath = Path.Combine(documentPath, "MyProjects", "Exercises");
+string zipFile = Path.Combine(documentPath, "MyProjects", "Exercises.zip");
+string extractPath = Path.Combine(documentPath, "MyProjects", "Extract");
+
+if (File.Exists(zipFile)) File.Delete(zipFile);
+ZipFile.CreateFromDirectory(startPath, zipFile);
+Console.WriteLine($"Zip Created: {zipFile}");
+
+if (Directory.Exists(extractPath)) Directory.Delete(extractPath, true);
+ZipFile.ExtractToDirectory(zipFile, extractPath);
+Console.WriteLine($"Zip Extracted: {extractPath}");
+
+Console.WriteLine();
+Console.WriteLine($"Total price Box of necklaces: {listOfNecklaces.TotalNecklaceBoxPrice():C2}");
+Console.WriteLine($"Total amount of black pearls: {listOfNecklaces.TotalNumberOfBlackPearls()}");

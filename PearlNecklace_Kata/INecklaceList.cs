@@ -11,6 +11,8 @@ namespace PearlNecklace_Kata
         public IPearlList this[int idx] { get;}
         int Count();
         void Sort();
+        decimal TotalNecklaceBoxPrice();
+        int TotalNumberOfBlackPearls();
 
     }
 }

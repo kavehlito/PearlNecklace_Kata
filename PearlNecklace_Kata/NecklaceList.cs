@@ -18,9 +18,30 @@
             }
             return sRet;
         }
+
         public int Count() => _necklaceList.Count();
 
         public void Sort() => _necklaceList.Sort();
+
+        public decimal TotalNecklaceBoxPrice()
+        {
+            decimal totalBoxPrice = 0;
+            foreach (var item in _necklaceList)
+            {
+                totalBoxPrice += item.TotalPrice();
+            }
+            return totalBoxPrice;
+        }
+
+        public int TotalNumberOfBlackPearls()
+        {
+            int totalNrBlackPearls = 0;
+            foreach (var item in _necklaceList)
+            {
+                totalNrBlackPearls += item.NumberOfBlackPearls();
+            }
+            return totalNrBlackPearls;
+        }
 
         internal static class Factory
         {
