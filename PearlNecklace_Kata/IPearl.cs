@@ -11,11 +11,11 @@ namespace PearlNecklace_Kata
     public enum Type { Freshwater, Saltwater}
     internal interface IPearl : IComparable<IPearl>, IEquatable<IPearl>
     {
-        public Color Color { get; set; }
-        public Shape Shape { get; set; }
-        public Type Type { get; set; }
-        public int Size { get; set; }
-        public decimal Price { get; set; }
+        public Color Color { get;}
+        public Shape Shape { get;}
+        public Type Type { get;}
+        public int Size { get;}
+        public decimal Price { get;}
         public void RandomInit();
     }
 }

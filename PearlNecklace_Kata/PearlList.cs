@@ -1,7 +1,7 @@
 ﻿using PearlNecklace_Kata;
 namespace PearlNecklace_Kata
 {
-    internal class Necklace : INecklace
+    internal class PearlList : IPearlList
     {
         List<IPearl> _necklaceList = new List<IPearl>();
         public IPearl this[int idx]
@@ -11,13 +11,13 @@ namespace PearlNecklace_Kata
         public override string ToString()
         {
             string sRet = "";
-            int pearlNum = 0;
+            int pearlNum = 1;
             for (int i = 0; i < _necklaceList.Count; i++)
             {
-                sRet += $"Pearl #{pearlNum}:  {_necklaceList[i]}\n";
-                if ((i + 1) % 10 == 0)
+                sRet += $"Pearl #{pearlNum}: {_necklaceList[i]}\n";
+                //if ((i + 1) % 10 == 0)
                 {
-                    sRet += "\n";
+               //     sRet += "\n";
                 }
                 pearlNum++;
             }
@@ -59,9 +59,9 @@ namespace PearlNecklace_Kata
 
         internal static class Factory
         {
-            internal static INecklace CreateNecklaceList(int NrOfNecklaces)
+            internal static IPearlList CreateNecklace(int NrOfNecklaces)
             {
-                var pearList = new Necklace();
+                var pearList = new PearlList();
                 for (int i = 0; i < NrOfNecklaces; i++)
                 {
                     pearList._necklaceList.Add(Pearl.Factory.CreateRandomNecklace());
@@ -69,6 +69,6 @@ namespace PearlNecklace_Kata
                 return pearList;
             }
         }
-        public Necklace() { }
+        public PearlList() { }
     }
 }

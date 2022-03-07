@@ -8,11 +8,11 @@ namespace PearlNecklace_Kata
 {
     internal class Pearl : IPearl
     {
-        public Color Color { get; set; }
-        public Shape Shape { get; set; }
-        public Type Type { get; set; }
-        public int Size { get; set; }
-        public decimal Price { get; set; }
+        public Color Color { get; private set; }
+        public Shape Shape { get; private set; }
+        public Type Type { get; private set; }
+        public int Size { get; private set; }
+        public decimal Price { get; private set; }
 
         public override string ToString()
         {
@@ -39,6 +39,8 @@ namespace PearlNecklace_Kata
             return Price.CompareTo(other.Price);
         }
 
+        public static bool operator == (Pearl p1, Pearl p2) => Equals(p1, p2);
+        public static bool operator != (Pearl p1, Pearl p2) => !Equals(p1, p2);
         public override bool Equals(object obj) => Equals(obj as IPearl);
         public bool Equals(IPearl other) => (this.Size,this.Color,this.Shape,this.Type,this.Price)
             == (other.Size,other.Color,other.Shape,other.Type,other.Price);
@@ -65,6 +67,14 @@ namespace PearlNecklace_Kata
                 }
                 catch { }
             }
+        }
+        public Pearl(Pearl pearl)
+        {
+            Color = pearl.Color;
+            Shape = pearl.Shape;
+            Type = pearl.Type;
+            Size = pearl.Size;
+            Price = pearl.Price;
         }
         internal static class Factory
         {
