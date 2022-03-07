@@ -7,11 +7,11 @@ var testNecklace1 = new Pearl();
 Console.WriteLine(testNecklace1);
 Console.WriteLine();
 
-var necklaceList = PearlList.Factory.CreateNecklaceList(100);
+var necklaceList = Necklace.Factory.CreateNecklaceList(100);
 Console.WriteLine(necklaceList);
-Console.WriteLine($"Amount of Necklaces: {necklaceList.Count()}");
-Console.WriteLine($"Amount of {PearlNecklace_Kata.Type.Freshwater} necklaces: { necklaceList.NrOfEachType().freshCount}" +
-    $"\nAmount of {PearlNecklace_Kata.Type.Saltwater} necklaces: {necklaceList.NrOfEachType().saltCount}");
+Console.WriteLine($"Amount of Pearls: {necklaceList.Count()}");
+Console.WriteLine($"Amount of {PearlNecklace_Kata.Type.Freshwater} pearls: { necklaceList.NrOfEachType().freshCount}" +
+    $"\nAmount of {PearlNecklace_Kata.Type.Saltwater} pearls: {necklaceList.NrOfEachType().saltCount}");
 Console.WriteLine();
 Console.WriteLine();
 

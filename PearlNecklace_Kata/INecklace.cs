@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PearlNecklace_Kata
 {
-    internal interface IPearlList
+    internal interface INecklace
     {
         public IPearl this[int idx] { get; }
         int Count();

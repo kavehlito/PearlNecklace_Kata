@@ -16,7 +16,7 @@ namespace PearlNecklace_Kata
 
         public override string ToString()
         {
-            return $"{Type}pearl necklace, Color: {Color}, Shape: {Shape}. Size: {Size}mm. Price: {Price:C2}";
+            return $"{Type} pearl, Color: {Color}, Shape: {Shape}. Size: {Size}mm. Price: {Price:C2}";
         }
         public int CompareTo(IPearl other)
         {
