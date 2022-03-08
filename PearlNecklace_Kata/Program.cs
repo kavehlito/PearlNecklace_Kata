@@ -1,4 +1,5 @@
 ﻿using PearlNecklace_Kata;
+using System.Diagnostics;
 using System.IO.Compression;
 
 var necklace1 = Pearl.Factory.CreateRandomNecklace();
@@ -27,7 +28,7 @@ if (pearlList.IndexOf(testNecklace1) == -1)
 }
 else
 {
-    Console.WriteLine(pearlList.IndexOf(testNecklace1)+1);
+    Console.WriteLine(pearlList.IndexOf(testNecklace1) + 1);
 }
 
 var listOfNecklaces = NecklaceList.Factory.CreateNecklanceList(1000);
@@ -36,7 +37,8 @@ Console.WriteLine("----------------------------------------");
 //Console.WriteLine(listOfNecklaces);
 Console.WriteLine("----------------------------------------");
 Console.WriteLine($"Total price Box of necklaces: {listOfNecklaces.TotalNecklaceBoxPrice():C2}");
-Console.WriteLine($"Total amount of black pearls: {listOfNecklaces.TotalNumberOfBlackPearls()}");
+Console.WriteLine($"Total amount of black pearls: {listOfNecklaces.TotalNumberOfBlackPearls()}\n");
+Console.WriteLine();
 
 /*
 string filename = fname("PearlNecklace.txt");
@@ -69,7 +71,7 @@ string boxOfNecklaces = bname("BoxOfNecklaces.txt");
 using (FileStream fs = File.Create(boxOfNecklaces))
 using (TextWriter writer = new StreamWriter(fs))
 {
-	writer.WriteLine($"{listOfNecklaces}\nTotal price Box of necklaces: {listOfNecklaces.TotalNecklaceBoxPrice():C2}" +
+    writer.WriteLine($"{listOfNecklaces}\nTotal price Box of necklaces: {listOfNecklaces.TotalNecklaceBoxPrice():C2}" +
         $"\nTotal amount of black pearls: {listOfNecklaces.TotalNumberOfBlackPearls()}");
     Console.WriteLine();
     Console.WriteLine(boxOfNecklaces);
@@ -79,7 +81,7 @@ using (TextWriter writer = new StreamWriter(fs))
 using (FileStream fs = File.OpenRead(bname("BoxOfNecklaces.txt")))
 using (TextReader reader = new StreamReader(fs))
 {
-	Console.WriteLine(reader.ReadLine());
+    Console.WriteLine(reader.ReadLine());
 }
 
 
@@ -98,17 +100,14 @@ using (TextWriter w = new StreamWriter(ds))
 
 Console.WriteLine(new FileInfo(bname("BoxOfNecklaces_compressed.zip")).Length);
 
-using (Stream s = File.OpenRead(bname("BoxOfNecklaces_compressed.zip")))
-using (Stream ds = new GZipStream(s, CompressionMode.Decompress))
-using (TextReader r = new StreamReader(ds))
-    Console.Write(r.ReadToEnd());
+
 
 static string bname(string name)
 {
-	var documentPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-	documentPath = Path.Combine(documentPath, "MyProjects", "Exercises");
-	if (!Directory.Exists(documentPath)) Directory.CreateDirectory(documentPath);
-	return Path.Combine(documentPath, name);
+    var documentPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+    documentPath = Path.Combine(documentPath, "MyProjects", "Exercises");
+    if (!Directory.Exists(documentPath)) Directory.CreateDirectory(documentPath);
+    return Path.Combine(documentPath, name);
 }
 var documentPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
@@ -118,12 +117,33 @@ string extractPath = Path.Combine(documentPath, "MyProjects", "Extract");
 
 if (File.Exists(zipFile)) File.Delete(zipFile);
 ZipFile.CreateFromDirectory(startPath, zipFile);
+Console.WriteLine();
 Console.WriteLine($"Zip Created: {zipFile}");
 
 if (Directory.Exists(extractPath)) Directory.Delete(extractPath, true);
 ZipFile.ExtractToDirectory(zipFile, extractPath);
 Console.WriteLine($"Zip Extracted: {extractPath}");
 
-Console.WriteLine();
-Console.WriteLine($"Total price Box of necklaces: {listOfNecklaces.TotalNecklaceBoxPrice():C2}");
-Console.WriteLine($"Total amount of black pearls: {listOfNecklaces.TotalNumberOfBlackPearls()}");
+using (ZipArchive archive = ZipFile.OpenRead(zipFile))
+{
+    foreach (ZipArchiveEntry entry in archive.Entries)
+    {
+        Console.WriteLine(entry.FullName);
+    }
+}
+
+static void OpenFolder(string folderPath)
+{
+    if (Directory.Exists(folderPath))
+    {
+        ProcessStartInfo startInfo = new ProcessStartInfo()
+        {
+            Arguments = folderPath,
+            FileName = "explorer.exe"
+        };
+
+        Process.Start(startInfo);
+    }
+}
+
+//OpenFolder(startPath);
